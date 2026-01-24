@@ -1,5 +1,5 @@
 idea:
-- vectors: L2 data
+- vectors: encoded L2 data
 - make a custum NN architecture for training
     - paper
 - mechanistic for market data flow

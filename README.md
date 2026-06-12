@@ -71,24 +71,59 @@ anytime-valid inference (Ramdas et al.), game-theoretic probability
 (Shafer-Vovk, which is formulated as betting against a market;
 the metaphor is load-bearing here).
 
-### 3. Application (one honest market-data result)
+### 3. Application (two decisions a desk actually makes)
 
-LOB anomaly and regime-change detection with controlled false-alarm
-rate, on LOBSTER sample data and FI-2010. The deliverable is not
-alpha. The deliverable is: detection latency vs false-alarm budget,
-against fixed-threshold and CUSUM baselines, with the FPR actually
-held where the theory says.
+No alpha gets published, ever; if it works you trade it. What gets
+published and adopted is the infrastructure that protects and sizes
+edge. Two concrete deliverables:
+
+**3a. Strategy gating.** The kill-switch problem: a running book's
+edge assumes a regime; the regime shifts; when do you de-risk?
+Rolling-Sharpe thresholds and CUSUM are either invalid under
+continuous monitoring (peeking destroys the nominal false-alarm
+rate) or need distributional assumptions. The e-process gate is
+anytime-valid: monitor every tick, stop whenever, the false-alarm
+budget holds. Evaluate on simple strategy P&L (momentum or pairs on
+liquid names): drawdown avoided vs opportunity cost paid, as a
+function of the false-alarm budget, against the CUSUM and
+rolling-Sharpe baselines.
+
+**3b. Flow-toxicity monitoring.** VPIN is the standard
+order-flow-toxicity input to quote-pulling decisions and it carries
+no guarantees (see Andersen-Bondarenko's critique). Build the
+anytime-valid replacement on LOB features, evaluate on
+flash-crash-labeled LOBSTER data: detection latency vs false-alarm
+rate, with the rate actually held where the theory says.
 
 Honesty rules carried over from bayes-hdc: tuned baselines, all
 splits disclosed, committed results with provenance, losses printed.
 
+## The claim that pushes the field
+
+Detection and sizing are the same object. An e-process is a wealth
+process: you test "regime unchanged" by betting against it, and
+under log-utility the optimal test is the Kelly-optimal bet. So the
+de-risking schedule (how much to scale the book down as evidence
+accumulates) is not a separate heuristic bolted onto a detector; it
+IS the detector's wealth process. Sequential testing and portfolio
+choice are siloed literatures, game-theoretic probability was built
+on market metaphors, and almost nobody has taken it back to actual
+markets with a decision attached. That bridge, with data, is the
+paper.
+
+Where HDC honestly fits: it will not out-predict a transformer. Its
+edge is that bind/bundle are O(d) elementwise with no gradients: a
+feature map cheap enough for the hot path at wire speed, where big
+models cannot run. That is a latency claim, not an intelligence
+claim, and it is the only alpha-adjacent sentence this project gets.
+
 ## Why this is the quant-fellowship paper
 
 The math is the hiring bar: concentration of measure, martingales,
-optional stopping, Kelly betting. Every theorem here is also an
-interview answer. The application is market data without pretending
-to be a trading strategy, which is the version of finance work a
-research shop respects from a student.
+optional stopping, Kelly betting. Every theorem is an interview
+answer. The applications are the two decisions (gate the book, pull
+the quotes) a research shop will recognize as theirs, written by
+someone who understands why alpha itself never appears in a paper.
 
 ## Status and sequencing
 
@@ -110,8 +145,11 @@ game-theoretic statistics and safe anytime-valid inference (2023
 survey); Shafer & Vovk, Game-Theoretic Foundations for Probability
 and Finance; Volkhonskiy et al. (COPA 2017) inductive conformal
 martingales.
-Application: Zhang, Zohren, Roberts, DeepLOB; FI-2010 benchmark
-paper and its known leakage caveats; LOBSTER documentation.
+Application: Easley, Lopez de Prado, O'Hara on VPIN and the
+Andersen-Bondarenko critique; Zhang, Zohren, Roberts, DeepLOB;
+FI-2010 benchmark paper and its known leakage caveats; LOBSTER
+documentation; Kelly 1956 and Breiman 1961 for growth-optimal
+betting.
 
 ## Open questions parked here
 
